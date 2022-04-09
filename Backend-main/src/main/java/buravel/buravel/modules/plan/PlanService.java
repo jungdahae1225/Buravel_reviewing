@@ -390,8 +390,7 @@ public class PlanService {
     public Page<Plan> search(String keyword, long min, long max, Pageable pageable) {
         // 금액 검색 x
         if (max == 0) {
-            Page<Plan> plan = planRepository.findWithSearchCond(keyword,pageable);
-            return plan;
+            return null;
         }
         // 금액 검색 o
         Page<Plan> planWithPrice = planRepository.findWithSearchCondContainsPrice(keyword, min, max, pageable);

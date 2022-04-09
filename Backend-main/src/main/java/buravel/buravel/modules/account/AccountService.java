@@ -59,18 +59,6 @@ public class AccountService implements UserDetailsService {
         Account saved = accountRepository.save(map);
         return saved;
     }
-    public void sendTempPassword(Account account) {
-        if (!account.isEmailVerified()) {
-            throw new AccessDeniedException("이메일 인증된 회원만 가능합니다.");
-        }
-        // temp pass create
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        uuid = uuid.substring(0, 10);
-        // set temp pass
-        account.setPassword(passwordEncoder.encode(uuid));
-        publisher.publishEvent(new TempPasswordEvent(account,uuid));
-
-    }
     // resend emailCheckToken
     private void sendSignUpConfirmEmail(Account account) {
         publisher.publishEvent(new SignUpConfirmEvent(account));
@@ -100,6 +88,20 @@ public class AccountService implements UserDetailsService {
         AccountResponseDto dto = modelMapper.map(account, AccountResponseDto.class);
 
         return dto;
+    }
+
+
+    public void sendTempPassword(Account account) {
+        if (!account.isEmailVerified()) {
+            throw new AccessDeniedException("이메일 인증된 회원만 가능합니다.");
+        }
+        // temp pass create
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        uuid = uuid.substring(0, 10);
+        // set temp pass
+        account.setPassword(passwordEncoder.encode(uuid));
+        publisher.publishEvent(new TempPasswordEvent(account,uuid));
+
     }
 
     public Account findById(Long id) {

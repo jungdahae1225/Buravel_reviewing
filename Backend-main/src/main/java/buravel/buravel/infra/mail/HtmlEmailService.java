@@ -20,7 +20,7 @@ public class HtmlEmailService implements EmailService {
     private final JavaMailSender javaMailSender;
 
     @Override
-    public void sendEmail(EmailMessage emailMessage) {
+    public void sendEmail(EmailMessage emailMessage) { //mail dto를 받아온다. 이하 자바로 이메일 보내기 코드
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8"); // 이미지 넣기 위해 true로

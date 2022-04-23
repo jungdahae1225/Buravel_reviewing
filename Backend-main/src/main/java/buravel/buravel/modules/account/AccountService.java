@@ -76,7 +76,7 @@ public class AccountService implements UserDetailsService {
             return null;
         }
 
-        completeSignUp(account);
+        completeSignUp(account); //이메일 인증 ok로 만들기
         return createAccountResponseDto(account);
     }
 
